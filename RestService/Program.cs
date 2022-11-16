@@ -1,9 +1,10 @@
-var builder = WebApplication.CreateBuilder(args);
+using CustomerDataAccessLayer;
 
-// Add services to the container.
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
+// Register our DAO class for getting customer objects
+builder.Services.AddSingleton<ICustomerDao, CustomerDao>();
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

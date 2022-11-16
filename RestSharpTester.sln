@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestSharpTesterConsole", "RestSharpTesterConsole\RestSharpTesterConsole.csproj", "{A291D468-75F5-4F97-9FCD-BCD076FB9939}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestSharpTesterConsole", "RestSharpTesterConsole\RestSharpTesterConsole.csproj", "{A291D468-75F5-4F97-9FCD-BCD076FB9939}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestService", "RestService\RestService.csproj", "{35B1EAA0-EC4E-41A0-BE2B-43C849E61339}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestService", "RestService\RestService.csproj", "{35B1EAA0-EC4E-41A0-BE2B-43C849E61339}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomerDataAccessLayer", "CustomerDataAccessLayer\CustomerDataAccessLayer.csproj", "{C3FA8238-8E2E-436E-84FA-E43D1610B994}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{35B1EAA0-EC4E-41A0-BE2B-43C849E61339}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35B1EAA0-EC4E-41A0-BE2B-43C849E61339}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35B1EAA0-EC4E-41A0-BE2B-43C849E61339}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3FA8238-8E2E-436E-84FA-E43D1610B994}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3FA8238-8E2E-436E-84FA-E43D1610B994}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3FA8238-8E2E-436E-84FA-E43D1610B994}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3FA8238-8E2E-436E-84FA-E43D1610B994}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

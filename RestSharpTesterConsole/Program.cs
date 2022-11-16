@@ -1,5 +1,5 @@
-﻿using RestSharpTesterConsole.CustomerClient;
-using RestSharpTesterConsole.CustomerClient.Model;
+﻿using RestSharpTesterConsole.CustomerRestClient;
+using RestSharpTesterConsole.CustomerRestClient.Model;
 
 public class Program
 {
@@ -21,7 +21,7 @@ public class Program
 
         //insert new customer
         Console.WriteLine($"Inserting Henning as new customer");
-        client.InsertCustomer(new Customer() { Name = "Henning", Email = "henning@gmail.com" });
+        client.InsertCustomer(new CustomerDto() { Name = "Henning", Email = "henning@gmail.com" });
         Console.WriteLine();
         
         //delete a customer using the id
@@ -31,14 +31,22 @@ public class Program
         
         //update a customer 
         Console.WriteLine($"Updating Clara to Børge");
-        client.UpdateCustomer(new Customer() { Id=3, Name = "Børge", Email = "børge@gmail.com" });
+        client.UpdateCustomer(new CustomerDto() { Id=3, Name = "Børge", Email = "børge@gmail.com" });
         Console.WriteLine();
 
         //find a specific customer
         Console.WriteLine($"Finding Bob using ID 2");
-        Customer bob = client.GetCustomerById(2);
-        Console.WriteLine("Found: " + bob.Name);
+        CustomerDto? bob = client.GetCustomerById(2);
+        Console.WriteLine("Found: " + bob?.Name);
         Console.WriteLine();
+
+        //search customers based on part of name and email
+        Console.WriteLine($"Getting all clients having 'e' in their name and 'h' in their email address");
+        foreach (var customer in client.SearchCustomers("e", "h"))
+        {
+            Console.WriteLine(customer.Name);
+        }
+
 
         //getting all clients again, to see the changes
         Console.WriteLine($"Getting all clients from '{restUrl}'");

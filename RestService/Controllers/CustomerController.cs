@@ -1,52 +1,62 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CustomerDataAccessLayer;
+using CustomerDataAccessLayer.Model;
+using Microsoft.AspNetCore.Mvc;
+using RestService.ConversionTools;
+using RestService.Model;
 
-namespace RestService.Controllers
+namespace RestService.Controllers;
+
+[Route("api/v1/customers")]
+[ApiController]
+public class CustomerController : ControllerBase
 {
-    [Route("api/customers")]
-    [ApiController]
-    public class CustomerController : ControllerBase
-    {
-        //a list of customers which we make static to save them on the class
-        //and make them persistent between calls to the controller
-        //this is to simulate a storage medium like a database
-        private static List<Customer> customers = new List<Customer>() { new Customer() { Id = 1, Name = "Anna", Email = "Anna@gmail.com" }, new Customer() { Id = 2, Name = "Bob", Email = "Bob@gmail.com" }, new Customer() { Id = 3, Name = "Clara", Email = "Clara@gmail.com" }
-    };
+    ICustomerDao _customerDao;
+    public CustomerController(ICustomerDao customerDao) => _customerDao = customerDao;
+
     [HttpGet]
-        public ActionResult<IEnumerable<Customer>> Get()
-        {
-            return Ok(customers);
-        }
+    public ActionResult<IEnumerable<CustomerDto>> Get()
+    {
+        return Ok(_customerDao.GetCustomers());
+    }
 
-        [HttpGet("{id}")]
-        public ActionResult<Customer?> Get(int id)
-        {
-            Customer? customer = customers.FirstOrDefault(customer => customer.Id == id);
-            if(customer == null) { return NotFound(); }
-            return Ok(customer);
-        }
+    [HttpGet("{id}")]
+    public ActionResult<CustomerDto?> Get(int id)
+    {
+        var customer = _customerDao.GetCustomerById(id);
 
-        [HttpPost]
-        public ActionResult Post([FromBody] Customer customer)
-        {
-            customers.Add(customer);
-            return Ok();
-        }
+        if(customer == null) { return NotFound(); }
+        return Ok(customer.ToDto());
+    }
 
-        [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] Customer updateCustomer)
-        {
-            Customer? customer = customers.FirstOrDefault(customer => customer.Id == updateCustomer.Id);
-            if(customer == null) { return NotFound();}
-            customer.Name = updateCustomer.Name;
-            customer.Email = updateCustomer.Email;
-            return Ok();
-        }
+    //https://localhost:7288/api/v1/customers/api/v1/customers/search?partOfName=e&partOfEmail=h'
+    [HttpGet("api/v1/customers/search")]
+    public ActionResult<IEnumerable<Customer>?> SearchCustomers(
+        [FromQuery] string partOfName, 
+        [FromQuery] string? partOfEmail = null)
+    {
+        return Ok(_customerDao.SearchCustomers(partOfName, partOfEmail)?.ToDtos());
+    }
 
-        [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
-        {
-            if(customers.RemoveAll(customer => customer.Id == id) > 0) { return Ok(); }
-            return NotFound();
-        }
+
+    [HttpPost]
+    public IActionResult Post([FromBody] CustomerDto customer)
+    {
+        _customerDao.InsertCustomer(customer.FromDto());
+        return Ok();
+    }
+
+    [HttpPut("{id}")]
+    public ActionResult Put(int id, [FromBody] CustomerDto customerToUpdate)
+    {
+        var customerFoundAndUpdated =_customerDao.UpdateCustomer(customerToUpdate.FromDto());
+        if(!customerFoundAndUpdated) { return NotFound();}
+        return Ok();
+    }
+
+    [HttpDelete("{id}")]
+    public ActionResult Delete(int id)
+    {
+        if(!_customerDao.DeleteCustomer(id)) { return NotFound(); }
+        return Ok();
     }
 }
