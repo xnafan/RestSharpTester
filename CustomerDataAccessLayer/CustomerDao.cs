@@ -19,17 +19,9 @@ public class CustomerDao : ICustomerDao
         new Customer() { Id = 10, Name = "James", Email = "James@hotmail.com" },
 
     };
-    public bool DeleteCustomer(int id)
-    {
-        return _customers.RemoveAll(customer => customer.Id == id) > 0;
-    }
-
-    public Customer? GetCustomerById(int id)
-    {
-        return _customers.FirstOrDefault(customer => customer.Id == id);
-    }
-
     public IEnumerable<Customer>? GetCustomers() => _customers;
+    public bool DeleteCustomer(int id) => _customers.RemoveAll(customer => customer.Id == id) > 0;
+    public Customer? GetCustomerById(int id) => _customers.FirstOrDefault(customer => customer.Id == id);
 
     public int InsertCustomer(Customer customer)
     {
