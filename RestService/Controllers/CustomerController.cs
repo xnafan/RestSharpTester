@@ -28,8 +28,8 @@ public class CustomerController : ControllerBase
         return Ok(customer.ToDto());
     }
 
-    //https://localhost:7288/api/v1/customers/api/v1/customers/search?partOfName=e&partOfEmail=h'
-    [HttpGet("api/v1/customers/search")]
+    //https://localhost:7288/api/v1/customers/search?partOfName=e&partOfEmail=h'
+    [HttpGet("search")]
     public ActionResult<IEnumerable<Customer>?> SearchCustomers(
         [FromQuery] string partOfName, 
         [FromQuery] string? partOfEmail = null)

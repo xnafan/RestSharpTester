@@ -41,9 +41,9 @@ public class CustomerRestClient : ICustomerClient
 
     public IEnumerable<CustomerDto>? SearchCustomers(string partOfName, string? partOfEmail = null)
     {
-        var request = new RestRequest("search?partOfName={partOfName}&partOfEmail={partOfEmail}")
-           .AddUrlSegment("partOfName", partOfName)
-           .AddUrlSegment("partOfEmail", partOfEmail ?? "");
+        var request = new RestRequest("search")
+           .AddQueryParameter("partOfName", partOfName)
+           .AddQueryParameter("partOfEmail", partOfEmail ?? "");
         return _client.Get<IEnumerable<CustomerDto>>(request);
     }
 

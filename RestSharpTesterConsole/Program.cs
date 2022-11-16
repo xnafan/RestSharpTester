@@ -5,7 +5,7 @@ public class Program
 {
     public static void Main()
     {
-        string restUrl = "https://localhost:7288/api/customers";
+        string restUrl = "https://localhost:7288/api/v1/customers";
 
         //Instantiate the client with the URL to contact
         ICustomerClient client = new CustomerRestClient(restUrl);
@@ -44,15 +44,15 @@ public class Program
         Console.WriteLine($"Getting all clients having 'e' in their name and 'h' in their email address");
         foreach (var customer in client.SearchCustomers("e", "h"))
         {
-            Console.WriteLine(customer.Name);
+            Console.WriteLine(customer);
         }
-
+        Console.WriteLine();
 
         //getting all clients again, to see the changes
         Console.WriteLine($"Getting all clients from '{restUrl}'");
         foreach (var customer in client.GetCustomers())
         {
-            Console.WriteLine(customer.Name);
+            Console.WriteLine(customer);
         }
         Console.WriteLine();
         Console.WriteLine("ENTER to exit");
