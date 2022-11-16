@@ -1,7 +1,7 @@
 # RestSharpTester
 Sample code to communicate with a REST service using a custom REST client.
 
-## Data Access Layer "CustomerDataAccessLayer"
+##Data Access Layer "CustomerDataAccessLayer"
 Is a stub which stores a list of customers in a static List<Customer>, to emulate CRUD on a database.
 
 ##Web Api "RestService"
