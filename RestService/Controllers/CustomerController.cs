@@ -30,7 +30,7 @@ public class CustomerController : ControllerBase
 
     //https://localhost:7288/api/v1/customers/search?partOfName=e&partOfEmail=h'
     [HttpGet("search")]
-    public ActionResult<IEnumerable<Customer>?> SearchCustomers(
+    public ActionResult<IEnumerable<CustomerDto>?> SearchCustomers(
         [FromQuery] string partOfName, 
         [FromQuery] string? partOfEmail = null)
     {
