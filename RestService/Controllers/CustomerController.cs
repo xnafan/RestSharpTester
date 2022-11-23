@@ -1,5 +1,4 @@
 ﻿using CustomerDataAccessLayer;
-using CustomerDataAccessLayer.Model;
 using Microsoft.AspNetCore.Mvc;
 using RestService.ConversionTools;
 using RestService.Model;
@@ -14,16 +13,15 @@ public class CustomerController : ControllerBase
     public CustomerController(ICustomerDao customerDao) => _customerDao = customerDao;
 
     [HttpGet]
-    public ActionResult<IEnumerable<CustomerDto>> Get()
+    public ActionResult<IEnumerable<CustomerDto>?> Get()
     {
-        return Ok(_customerDao.GetCustomers());
+        return Ok(_customerDao.GetCustomers()?.ToDtos());
     }
 
     [HttpGet("{id}")]
     public ActionResult<CustomerDto?> Get(int id)
     {
         var customer = _customerDao.GetCustomerById(id);
-
         if(customer == null) { return NotFound(); }
         return Ok(customer.ToDto());
     }
@@ -48,7 +46,8 @@ public class CustomerController : ControllerBase
     [HttpPut("{id}")]
     public ActionResult Put(int id, [FromBody] CustomerDto customerToUpdate)
     {
-        var customerFoundAndUpdated =_customerDao.UpdateCustomer(customerToUpdate.FromDto());
+        var customer = customerToUpdate.FromDto();
+        var customerFoundAndUpdated =_customerDao.UpdateCustomer(customer);
         if(!customerFoundAndUpdated) { return NotFound();}
         return Ok();
     }
