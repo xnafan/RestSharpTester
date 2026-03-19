@@ -22,7 +22,7 @@ public class CustomerRestClient : ICustomerClient
     {
         //sends a DELETE request to "api/customers/{id}"
         //and returns the returnvalue
-        var request = new RestRequest($"{id}", Method.Delete);
+        var request = new RestRequest($"{id}");
         return _client.Delete<bool>(request);
     }
 
@@ -52,8 +52,7 @@ public class CustomerRestClient : ICustomerClient
         //sends a POST request to "api/customers"
         //with the Customer as a JSON object in body
         //and returns the primary of the inserted customer
-        var request = new RestRequest("", Method.Post);
-        request.AddBody(customer);
+        var request = new RestRequest("", Method.Post).AddBody(customer);
         return _client.Post<int>(request);
     }
 
@@ -62,8 +61,7 @@ public class CustomerRestClient : ICustomerClient
         //sends a PUT request to "api/customers"
         //with the Customer as a JSON object in body
         //and returns whether the customer was found on the server
-        var request = new RestRequest($"{customer.Id}");
-        request.AddBody(customer);
+        var request = new RestRequest($"{customer.Id}").AddBody(customer);
         return _client.Put<bool>(request);
     }
 }
